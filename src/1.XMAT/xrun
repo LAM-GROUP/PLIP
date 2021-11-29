@@ -1,0 +1,43 @@
+#!/bin/bash
+#SBATCH -N 1 
+#SBATCH -n 1 
+#SBATCH --threads-per-core=1
+#SBATCH --cpus-per-task=32
+#SBATCH --mem=10000
+#SBATCH --time=4:00:00
+
+module purge
+module load intel/14.0 intelmpi/14.0
+
+
+export OMP_NUM_THREADS=32
+export MKL_NUM_THREADS=$OMP_NUM_THREADS
+
+
+
+
+srun XMAT
+
+
+##!/bin/bash
+##SBATCH -N 1 
+##SBATCH -n 1 
+##SBATCH --threads-per-core=1
+##SBATCH --cpus-per-task=1
+##SBATCH --mem=10000
+##SBATCH --time=4:00:00
+#
+#module purge
+#module load intel/14.0 intelmpi/14.0
+#
+#
+#./XMAT
+#
+##folder_out=$PWD
+##folder_in=${folder_out/tmpdir/users\/$GROUP}
+##
+##mkdir $folder_in
+##
+##cp -r * $folder_in
+##
+##

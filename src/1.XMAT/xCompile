@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+g++ -std=c++11 mod_fonction.cpp mod_tool.cpp  mod_XYZ.cpp mod_xmat.cpp  doXMAT.cpp -o XMAT  -fopenmp	#-lstdc++fs 
+./XMAT

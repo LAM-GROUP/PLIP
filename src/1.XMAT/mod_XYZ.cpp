@@ -47,9 +47,9 @@ void strucXYZ::doReadXYZ(string input_file)
 	NB=0;
 	getline(myfile,line);
 	stringstream in(line);  
-	if (linetype.find("Ge") != std::string::npos) 
+	if (linetype.find("Si") != std::string::npos) 
 	{		
-		if (linetype.find("Te") != std::string::npos) 
+		if (linetype.find("O") != std::string::npos) 
 			in>>NA>>NB;
 		else
 			in>>NA;
