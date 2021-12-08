@@ -51,13 +51,24 @@ string whichPot(int i_nature)
 //}
 
 
+//double fcut(double rcut, double r)
+//{
+//	return -1.49039973e-04*r*r*r*r*r+2.23553448e-03*r*r*r*r-1.51078107e-03*r*r*r-6.68806489e-02*r*r-7.41094448e-04*r+1.00007838e+00;
+//}
+//double fcutD(double rcut, double r)
+//{
+//	return -0.00073217*r*r*r*r+0.00878573*r*r*r-0.00390615*r*r-0.13470144*r-0.00033814;
+//}
+
 double fcut(double rcut, double r)
 {
-	return -1.49039973e-04*r*r*r*r*r+2.23553448e-03*r*r*r*r-1.51078107e-03*r*r*r-6.68806489e-02*r*r-7.41094448e-04*r+1.00007838e+00;
+	double pi=3.1415926535897932;
+	return 0.5*(1+cos(pi*(r/rcut)));
 }
 double fcutD(double rcut, double r)
 {
-	return -0.00073217*r*r*r*r+0.00878573*r*r*r-0.00390615*r*r-0.13470144*r-0.00033814;
+	double pi=3.1415926535897932;
+	return -pi/rcut*0.5*sin(pi*(r/rcut));
 }
 
 double fshort(double rshort, double r)
