@@ -115,7 +115,7 @@ search="Input/*forces"
 input_file=sorted(glob.glob(search))[0]
 XMAT,Yin=readFile(input_file)
 print(XMAT.shape, Yin.shape)
-"""
+
 for input_file in sorted(glob.glob(search))[1:]: 
         XMAT_tmp,Yin_tmp=readFile(input_file)
         XMAT=np.concatenate((XMAT,XMAT_tmp),axis=0)
@@ -175,4 +175,4 @@ with open("Out_"+str_type+".log",'w') as fw0:
                                 fw.write("%g %g %g \n"%(i,Y_Train[i],Y_OUT_Train[i]))
                     
                         fw0.write("%g %g %g %g %g %g %g %g %g %g  \n"%(   alpha, scoreTrain,scoreTest,RMSE_Train,RMSE_Test,MAS_Train,MAS_Test, sum(abs(coeff)>1E-10), np.size(coeff),np.mean(abs(Y_Train))) )
-"""                                
+                                
