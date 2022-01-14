@@ -1,3 +1,6 @@
+## @package Lasso
+# This package contains the LASSO-LARS implementation for PLIP.
+
 #!//usr/bin/python3
 
 
@@ -35,31 +38,27 @@ print (list_itype)
 print (str_type)
 
 
-
-
-##########################   
-####### FUNCTIONS ########
-##########################
  
-#### Ljfunction ####
+#### Ljfunction 
 def Lj(r,E,sigma):
     return 4.0*E*((r/sigma)**(-12.0) - (r/sigma)**(-6.0))
 
-#### GaussianFunction ####
+#### GaussianFunction 
 def gaussian(r,p,q):
     return np.exp(-p*(r-q)*(r-q))
-#### CUTOFF ####
+#### CUTOFF 
 def fcut(r,rcut):
     return 0.5*(1+np.cos(np.pi*(r/rcut))) 
 
-#### read functions  #####
+#### Read number of atoms  
 def getN_atoms(input_file):
         return  sum(1 for line in open(input_file))
 
+#### Read forces  
 def readForces(input_file):
     tmp=np.genfromtxt(input_file,invalid_raise=False, usecols=[0,1,2],dtype=float)
     return(tmp)
-
+### Read Input files 
 def readFile(input_file):
         input_lmp=input_file
         print (input_file)
@@ -90,7 +89,7 @@ def readFile(input_file):
     
         return(XMAT,Y) 
 
-#### Trace Curve ####
+#### Trace Curve 
 def computeV(r,list_w,list_r0,coeff,i_start):
     i=i_start
     gtot= np.zeros(r.size) 

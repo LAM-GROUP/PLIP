@@ -58,17 +58,17 @@ double LJ_D(double sigma,double r);
  * @param p Width of gaussian
  * @param q Position of gaussian
  * @param r Distance value
- * @return double 
+ * @return double Derivative value
  */
 double Gaus(double p,double q,double r);
 
 /**
  * @brief Derivative of gaussian function @see Gaus
  * 
- * @param p Width of gaussian
- * @param q Position of gaussian
- * @param r Distance value
- * @return double 
+ * @param p Width of gaussian.
+ * @param q Position of gaussian.
+ * @param r Distance value.
+ * @return double Derivative value
  */
 double Gaus_D(double p,double q,double r);
 
@@ -80,10 +80,10 @@ double expSW_D(double A,double B,double r);
  * @brief  The function used to link potential function and user input.
  * 
  * @param i_nature The integer value representing the choice of potential.
- * @param r        The distance value
- * @param param1   The first  parameter of the chosen potential function
- * @param param2   The second  parameter of the chosen potential function
- * @param Rcut     The cut-off value for distance
+ * @param r        The distance value.
+ * @param param1   The first  parameter of the chosen potential function.
+ * @param param2   The second  parameter of the chosen potential function.
+ * @param Rcut     The cut-off value for distance.
  * @return double  The calculated potential value.
  */
 double doCalc(int i_nature, double r, double param1 , double param2,double Rcut);
@@ -92,42 +92,42 @@ double doCalc(int i_nature, double r, double param1 , double param2,double Rcut)
  * @brief Returns the derivative of potential function 
  * 
  * @param i_nature The integer value representing the choice of potential.
- * @param r The distance value
- * @param param1 The first  parameter of the chosen potential function
- * @param param2 The second  parameter of the chosen potential function
- * @param Rcut The cut-off value for distance
+ * @param r The distance value.
+ * @param param1 The first  parameter of the chosen potential function.
+ * @param param2 The second  parameter of the chosen potential function.
+ * @param Rcut The cut-off value for distance.
  * @return double  The calculated derivative value.
  */
 double doCalcD(int i_nature, double r, double param1 , double param2,double Rcut);
 
 /**
- * @brief 
+ * @brief  The function is similar to @see doCalcD but with an additional short range part.
  * 
- * @param i_nature 
- * @param r 
- * @param param1 
- * @param param2 
- * @param Rcut 
- * @param Rshort 
- * @return double 
+ * @param i_nature The integer value representing the choice of potential.
+ * @param r The distance value.
+ * @param param1 The first  parameter of the chosen potential function.
+ * @param param2 The second  parameter of the chosen potential function.
+ * @param Rcut The cut-off value for distance.
+ * @param Rshort The value of short-range distance for Nbody conribution.
+ * @return double The calculated potential value.
  */
 double doCalc_Short(int i_nature, double r, double param1 , double param2,double Rcut,double Rshort);
 
 /**
- * @brief 
+ * @brief Returns derivative of @see doCalc_Short
  * 
- * @param i_nature 
+ * @param i_nature The integer value representing the choice of potential.
  * @param r 
- * @param param1 
- * @param param2 
- * @param Rcut 
- * @param Rshort 
- * @return double 
+ * @param param1 The first  parameter of the chosen potential function
+ * @param param2 The second  parameter of the chosen potential function
+ * @param Rcut The cut-off value for distance
+ * @param Rshort The value of short-range distance for Nbody conribution.
+ * @return double The calculated derivative value
  */
 double doCalcD_Short(int i_nature, double r, double param1 , double param2,double Rcut,double Rshort);
 
 /**
- * @brief Function to check the choice of potential for i_nature value.
+ * @brief Function to check the choice of potential given by user.
  * 
  * @param i_nature The integer number.
  * @return string  The type of potential.

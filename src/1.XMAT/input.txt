@@ -1,6 +1,5 @@
 
-Elements= Si O
-Rcut=     6                     |DUMP= Input |RAA= 1.1        |RBB= 1.1      |RAB= 1.1
+Rcut=     6                     |DUMP= Input |RAA= 2.156        |RBB= 1.813       |RAB= 1.144
 
 
 
