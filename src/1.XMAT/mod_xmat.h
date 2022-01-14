@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/**
+ * @brief 
+ * 
+ */
 class XMAT
 {
     private:
