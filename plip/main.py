@@ -52,11 +52,4 @@ def genPot():
             raise RuntimeError("The coefficient directory exists")
         run_program('GENPOT',[file_path])
         move_files('.', coefficient_dir, '*.fs', 'out*.txt', '*.sw')
-        os.chdir('..')           
-
-if __name__ == '__main__':
-
-    #compile()
-    #    genBin()
-    #train()
-    #genPot()
+        os.chdir('..')       
