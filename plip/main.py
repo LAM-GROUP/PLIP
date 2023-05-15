@@ -19,12 +19,23 @@ def compile():
 def genBin():
     """Function to generate bin files
     """
+    input_file="input.txt"
+    if not os.path.exists(input_file):
+        print(f"Error: The file '{input_file}' does not exist in the run directory.")
+        raise SystemExit(1)
     run_program('XMAT')
 
-def train():
+def train(args):
     """Train Lasso lars model"""
-   
-    runLasso('1')
+    ref_forces='Input'
+    ref_bins=f'Input_{args}'
+    
+    for directory in (ref_forces, ref_bins):
+        if not os.path.isdir(directory):
+            print(f"Error: The folder '{directory}' does not exist in the run directory.")
+            sys.exit(1)
+  
+    runLasso(args)
 
 def genPot():
     """Generate Potential """
