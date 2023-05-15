@@ -1,18 +1,28 @@
 #!/usr/bin/env python3
 import argparse
 from importlib import import_module
+from main import compile,genBin,train,genPot
 
-def main():
+def interface():
 
     parser = argparse.ArgumentParser(
                         prog='PLIP',
                         description='Physical Lassolars interaction potentials'
                         )
 
-    parser.add_argument("input.txt")
+    #parser.add_argument("input.txt")
 
-    #XMAT compilation option
-    parser.add_argument('--compile', '-c',action='store_true',help='compilation of XMAT code')
+    #XMAT and GENPOT compilation option
+    parser.add_argument('--compile', '-c',action='store_true',help='Compile C++ modules')
+    
+    # Generate  bin files
+    parser.add_argument('--genbin', '-g',type=str,choices=["input.txt"], help='Generate binary files')
+
+    # train a model
+    parser.add_argument('--train', '-t',type=str,choices=["1"], help='Run the lassolars')
+
+    # genpot
+    parser.add_argument('--genpot', '-p',action='store_true', help='Generate potential for all coefficient files')
 
     # Parse the arguments
     args = parser.parse_args()
@@ -21,8 +31,16 @@ def main():
     # Check value of flag
 
     if args.compile:
-        print('h')
+        compile()
+    if args.genbin:
+        genBin()
+    if args.train:
+        train(args.train)
+    if args.genpot:
+        genPot()
+
+    
 
 
 if __name__ == "__main__":
-    main()
+    interface()
