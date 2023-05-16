@@ -10,9 +10,9 @@ def compile_program(program_name, source_files, export_name):
     """ Function to compile files
 
     Args:
-        program_name (_type_): _description_
-        source_files (_type_): _description_
-        export_name (_type_): _description_
+        program_name (str): Name of the executable
+        source_files (str): List f source files
+        export_name (str):  Executable name
     """
     try:
          # Store the current directory
@@ -27,7 +27,7 @@ def compile_program(program_name, source_files, export_name):
         print(f"Error: {e}")
         sys.exit(1)
     
-    export_path= str(script_directory.parent.absolute())+f'/bin/{export_name}'
+    export_path = str(script_directory.parent.absolute())+f'/bin/{export_name}'
     comp = subprocess.run(['g++', '-std=c++11'] + source_files + ['-o', export_path, '-fopenmp'],
                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -41,12 +41,13 @@ def compile_program(program_name, source_files, export_name):
     # Return to the original directory
     os.chdir(old_path)
 
-def run_program(program_name,program_args=None, **kwargs):
-    """_summary_
+
+def run_program(program_name, program_args=[]):
+    """ Run program
 
     Args:
-        program_name (_type_): _description_
-        program_args (_type_, optional): _description_. Defaults to None.
+        program_name (str): Name of the executable
+        program_args (list, optional): Extra flags for the executable.
     """
     script_directory = Path(__file__).parent.parent.absolute()
     program_path = str(script_directory) + f'/bin/{program_name}'
@@ -56,12 +57,13 @@ def run_program(program_name,program_args=None, **kwargs):
         print(f'{program_name} executable not found. Please compile to get {program_name} or make sure the {program_name} code is in the bin folder')
         sys.exit(1)
 
+
 def move_files(source_dir, destination_dir, *file_patterns):
-    """_summary_
+    """ Move files
 
     Args:
-        source_dir (_type_): _description_
-        destination_dir (_type_): _description_
+        source_dir (str): Source destination
+        destination_dir (str): End destination
     """
     for pattern in file_patterns:
         files = glob.glob(os.path.join(source_dir, pattern))
