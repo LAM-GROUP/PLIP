@@ -1,3 +1,3 @@
 #!/usr/bin/env python3
-from plip.cli.main import main
-main()
+from cli.interface import interface
+interface()
