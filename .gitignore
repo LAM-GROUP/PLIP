@@ -1,2 +1,8 @@
 # Sphinx documentation
 docs/_build/
+
+#VScode
+**/.vscode/
+
+#Python
+**/__pycache__/
