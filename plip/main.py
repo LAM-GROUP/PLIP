@@ -2,10 +2,9 @@ import os
 import shutil
 import pathlib
 import glob
-import subprocess
 import sys
 
-from utils import compile_program,run_program,move_files
+from utils import compile_program, run_program, move_files
 from Lasso import runLasso
 
 
@@ -19,16 +18,20 @@ def compile():
 def genBin():
     """Function to generate bin files
     """
-    input_file="input.txt"
+    input_file = "input.txt"
     if not os.path.exists(input_file):
         print(f"Error: The file '{input_file}' does not exist in the run directory.")
         raise SystemExit(1)
     run_program('XMAT')
 
 def train(args):
-    """Train Lasso lars model"""
-    ref_forces='Input'
-    ref_bins=f'Input_{args}'
+    """ Train LassoLars model
+
+    Args:
+        args (str): Type of descriptor 
+    """
+    ref_forces = 'Input'
+    ref_bins = f'Input_{args}'
     
     for directory in (ref_forces, ref_bins):
         if not os.path.isdir(directory):
@@ -41,16 +44,16 @@ def genPot():
     """Generate Potential """
 
     file_pattern = 'Coeff*'
-    destination='POTS'
+    destination = 'POTS'
     try:
         os.mkdir(destination)
     except FileExistsError:
         raise RuntimeError("The 'POTS' directory already exists. Please delete or move it.")
     
-    shutil.copy2('input.txt',destination)
+    shutil.copy2('input.txt', destination)
     if not os.path.exists(destination+'GenEAM.py'):
-        genpy_path=str(pathlib.Path(__file__).parent.resolve()) +'/cpp/GEN_POT/GenEAM.py'
-        shutil.copy2(genpy_path,destination)
+        genpy_path = str(pathlib.Path(__file__).parent.resolve()) +'/cpp/GEN_POT/GenEAM.py'
+        shutil.copy2(genpy_path, destination)
     
     matching_files = glob.glob(file_pattern)
     for file_path in matching_files:
@@ -61,6 +64,6 @@ def genPot():
             os.mkdir(coefficient_dir)
         except FileExistsError:
             raise RuntimeError("The coefficient directory exists")
-        run_program('GENPOT',[file_path])
+        run_program('GENPOT', [file_path])
         move_files('.', coefficient_dir, '*.fs', 'out*.txt', '*.sw')
-        os.chdir('..')       
+        os.chdir('..')
