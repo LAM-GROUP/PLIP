@@ -1,3 +1,32 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "plip"
+authors = [
+    {name = "Akshay Krishna AK", email = "akshaykrishnaak9@gmail.com"},
+    {name = "Julien Lam", email = "julien.lam@cnrs.fr"},
+
+]
+description = "A python package for PLIP ML potential"
+requires-python = ">=3.7"
+version = "0.1.0"
+license = { "file" = "LICENSE" }
+readme = "README.md"
+dependencies = [
+    "scikit-learn ~=1.2.2",
+    "atsim.potentials ~=0.2.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+plip_fit = "plip.cli.interface:interface"
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 tag_format = "$version"
