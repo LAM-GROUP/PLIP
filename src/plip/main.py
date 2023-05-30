@@ -4,8 +4,8 @@ import pathlib
 import glob
 import sys
 
-from utils import compile_program, run_program, move_files
-from Lasso import runLasso
+from plip.utils import compile_program, run_program, move_files
+from plip.Lasso import runLasso
 
 
 def compile():

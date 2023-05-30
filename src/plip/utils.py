@@ -27,7 +27,7 @@ def compile_program(program_name, source_files, export_name):
         print(f"Error: {e}")
         sys.exit(1)
     
-    export_path = str(script_directory.parent.absolute())+f'/bin/{export_name}'
+    export_path = str(script_directory.parent.parent.absolute())+f'/bin/{export_name}'
     comp = subprocess.run(['g++', '-std=c++11'] + source_files + ['-o', export_path, '-fopenmp'],
                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
@@ -49,12 +49,13 @@ def run_program(program_name, program_args=[]):
         program_name (str): Name of the executable
         program_args (list, optional): Extra flags for the executable.
     """
-    script_directory = Path(__file__).parent.parent.absolute()
+    script_directory = Path(__file__).parent.parent.parent.absolute()
     program_path = str(script_directory) + f'/bin/{program_name}'
     try:
         subprocess.run([program_path]+ program_args, stderr=subprocess.PIPE, check=True)
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         print(f'{program_name} executable not found. Please compile to get {program_name} or make sure the {program_name} code is in the bin folder')
+        print(f"Error:{e}")
         sys.exit(1)
 
 

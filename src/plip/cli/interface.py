@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 from importlib import import_module
-from main import compile,genBin,train,genPot
+from plip.main import compile,genBin,train,genPot
 
 def interface():
 
