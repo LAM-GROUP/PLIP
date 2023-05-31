@@ -30,10 +30,10 @@ def train(args):
     Args:
         args (str): Type of descriptor 
     """
-    ref_forces = 'Input'
-    ref_bins = f'Input_{args}'
+    ref_forces = 'Refs'
+    input_dir = 'Input'
     
-    for directory in (ref_forces, ref_bins):
+    for directory in (ref_forces,input_dir):
         if not os.path.isdir(directory):
             print(f"Error: The folder '{directory}' does not exist in the run directory.")
             sys.exit(1)

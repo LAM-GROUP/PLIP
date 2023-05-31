@@ -65,7 +65,7 @@ def readFile(input_file,list_itype):
         list_bin=[]
         for i_type in list_itype: 
                 search=input_file[:-6]+"poscar_f"+str(i_type)+"_*bin"        # changing poscar fomat
-                search=search.replace("Input","Input_"+str(i_type))
+                search=search.replace("Refs","Input")
                 print (search)
                 list_bin=np.append(list_bin,sorted(glob.glob(search)))
         
@@ -98,9 +98,8 @@ def computeV(r,list_w,list_r0,coeff,i_start):
 ###############################   
 ####### LASSO PROCESS #########
 ###############################
-def runLasso(inputArgs):  
+def runLasso(inputArgs, ref_dir='Refs'):  
         print('Running LassoLars')
-#        inputArgs=sys.argv
         list_itype=[]
         str_type=""
         for i in np.arange(len(inputArgs)):
@@ -114,9 +113,11 @@ def runLasso(inputArgs):
 
         i_select=1
         #### Data reading #### 
-        search="Input/*forces"
+        search= f'{ref_dir}/*.forces'
         input_file=sorted(glob.glob(search))[0]
         print(f'input files:{input_file}')
+        if len(input_file) == 0 :
+               raise ValueError("The reference directory is empty or  references not in correct format")
         XMAT,Yin=readFile(input_file,list_itype)
         print(XMAT.shape, Yin.shape)
 
