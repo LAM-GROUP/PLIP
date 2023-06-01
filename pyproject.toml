@@ -27,6 +27,13 @@ where = ["src"]
 [project.scripts]
 plip_fit = "plip.cli.interface:interface"
 
+[project.optional-dependencies]
+dev = [
+    "flake8 ~=6.0.0",
+    "pytest ~= 7.3.1",
+]
+
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 tag_format = "$version"
