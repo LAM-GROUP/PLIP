@@ -63,7 +63,7 @@ def train(args):
 
 
 def genPot():
-    """Generate Potential"""
+    """Generate PLIP potential"""
 
     file_pattern = "Coeff*"
     destination = "POTS"

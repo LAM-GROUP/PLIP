@@ -60,7 +60,7 @@ def run_program(program_name, program_args=[]):
         )
     except FileNotFoundError as e:
         print(
-            f"{program_name} executable not found. Please compile to get {program_name} or make sure the {program_name} code is in the bin folder"
+            f"{program_name} executable not found. Compile to get {program_name} or make sure the {program_name} code is in the bin folder"
         )
         print(f"Error:{e}")
         sys.exit(1)

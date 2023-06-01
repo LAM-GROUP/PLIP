@@ -11,25 +11,50 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 
 # Read number of atoms
-def getN_atoms(input_file):
+def getNatoms(input_file):
+    """Counts number of atoms in a structure file
+
+    Args:
+        input_file (str): Input structure file
+
+    Returns:
+        int: total number of atoms
+    """
     return sum(1 for line in open(input_file))
 
 
 # Read forces
 def readForces(input_file):
+    """Read forces from a reference file
+
+    Args:
+        input_file (str): Input force file
+
+    Returns:
+        np.array: forces per atom
+    """
     tmp = np.genfromtxt(input_file, invalid_raise=False, usecols=[0, 1, 2], dtype=float)
     return tmp
 
 
 # Read Input files
 def readFile(input_file, list_itype):
+    """
+
+    Args:
+        input_file (str): input structure file
+        list_itype (list): type of descriptor
+
+    Returns:
+        np.array: fingerprint matrix
+    """
     input_lmp = input_file
     print(input_file)
     Y = readForces(input_lmp)
     Y = Y.reshape(1, 3 * np.shape(Y)[0])
     Y = Y[0]
 
-    #    N_atoms = getN_atoms(input_lmp)
+    #    N_atoms = getNatoms(input_lmp)
 
     list_bin = []
     for i_type in list_itype:
@@ -54,9 +79,16 @@ def readFile(input_file, list_itype):
 
 
 # LASSO PROCESS
-
-
 def runLasso(inputArgs, ref_dir="Refs"):
+    """
+
+    Args:
+        inputArgs (_type_): Input file name
+        ref_dir (str, optional): reference folder name. Defaults to "Refs".
+
+    Raises:
+        ValueError: When references are empty
+    """
     print("Running LassoLars")
     list_itype = []
     str_type = ""
