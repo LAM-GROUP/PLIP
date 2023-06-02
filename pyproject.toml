@@ -10,7 +10,7 @@ authors = [
 ]
 description = "A python package for PLIP ML potential"
 requires-python = ">=3.7"
-version = "0.1.0"
+version = "0.2.0"
 license = { "file" = "LICENSE" }
 readme = "README.md"
 dependencies = [
@@ -41,7 +41,7 @@ dev = [
 name = "cz_conventional_commits"
 tag_format = "$version"
 version_type = "semver"
-version = "0.1.0"
+version = "0.2.0"
 version_files = [
     "pyproject.toml:version"
 ]

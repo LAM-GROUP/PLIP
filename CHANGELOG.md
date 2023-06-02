@@ -1,3 +1,21 @@
+## 0.2.0 (2023-06-02)
+
+### Feat
+
+- version feature for the executable
+- One step approach from generating ML fingerprint to potential
+- Basic installation of package with pyproject.toml
+
+### Fix
+
+- Version updation in pyproject.toml file with commitzen
+- Installation of extra dependency pytest via pyproject.toml
+
+### Refactor
+
+- Correct import setting for cli interface in bin folder
+- Changed package layout to have  src folder
+
 ## 0.1.0 (2023-05-25)
 
 ### Feat
