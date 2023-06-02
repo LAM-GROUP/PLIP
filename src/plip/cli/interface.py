@@ -2,6 +2,7 @@
 import argparse
 
 from plip.main import compile, genBin, genPot, train
+from importlib.metadata import version
 
 
 def interface():
@@ -34,6 +35,13 @@ def interface():
         help="Generate potential for all coefficient files",
     )
 
+    parser.add_argument(
+        "--version",
+        "-v",
+        action="store_true",
+        help="version of the package",
+    )
+
     # Parse the arguments
     args = parser.parse_args()
     print(args)
@@ -48,6 +56,8 @@ def interface():
         train(args.train)
     if args.genpot:
         genPot()
+    if args.version:
+        print(version("plip"))
 
 
 if __name__ == "__main__":
