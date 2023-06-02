@@ -3,10 +3,30 @@ import os
 import pathlib
 import shutil
 import sys
+import yaml
+from yaml.loader import SafeLoader
 
 from plip.Lasso import runLasso
 from plip.utils import compile_program, move_files, run_program
 
+
+
+
+def xmat_input(config):
+    content = f"\nRcut=     {config['Rcut']}                     |DUMP= {config['DUMP']} |RAA= {config['RAA']}        |RBB= {config['RBB']}       |RAB= {config['RAB']}\n\n\n\n"
+    content += "#1:GAUSSIAN     3:SW    4:STO   6:GTO   7:Lorentz       8:Asssymetric lognormal\n"
+    content += "|-----------------------|-------------------------------|-----------------------|-----------------------|-------------------------------|-------------------------------|-------------------------------|\n"
+    content += "|   ~C~X~T~T~A~T~   |       0=False 1=True          |PARAM  :       MIN     MAX     STEP                                            |                               |                               |\n"
+    content += "|-----------------------|-------------------------------|-----------------------|-----------------------|-------------------------------|-------------------------------|-------------------------------|\n"
+    content += f"|       i_nature        |       INCLUDED                |       PARAMETER 1     |       PARAMETER 2     |               2B              |               3B              |               NB              |\n"
+    content += "|-----------------------|-------------------------------|-----------------------|-----------------------|-------------------------------|-------------------------------|-------------------------------|\n"
+    content += f"|       {config['i_nature']}            |               {config['included']}               |   {config['a']['MIN']}     {config['a']['MAX']}   {config['a']['STEP']}   |  {config['b']['MIN']}      {config['b']['MAX']}      {config['b']['STEP']}  |               {config['2B']}               |               {config['3B']}               |               {config['NB']}               |\n"
+
+# Write the content to input.txt
+    with open("input.txt", "w") as file:
+        file.write(content)
+
+    print("input.txt file has been generated.")
 
 def compile():
     """Function to compile C++ modules"""
@@ -93,3 +113,19 @@ def genPot():
         run_program("GENPOT", [file_path])
         move_files(".", coefficient_dir, "*.fs", "out*.txt", "*.sw")
         os.chdir("..")
+
+def yaml_reader(filename):
+ #   filename="input.yaml"
+    with open(filename) as f:
+        data = yaml.load(f, Loader=SafeLoader)
+        print(data)
+    if data['Input']:
+        xmat_input(data['Input'])
+    if data['compile']:
+        compile()
+    if data['genBin']:
+        genBin()
+    if data['train']:
+        runLasso(data['train']['i_nature'])
+    if data['genPot']:
+        pass

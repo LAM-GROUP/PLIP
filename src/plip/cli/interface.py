@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 
-from plip.main import compile, genBin, genPot, train
+from plip.main import compile, genBin, genPot, train, xmat_input, yaml_reader
 from importlib.metadata import version
 
 
@@ -11,6 +11,10 @@ def interface():
     )
 
     # parser.add_argument("input.txt")
+    # yaml
+    parser.add_argument(
+        "--yaml", "-i", type=str, choices=["input.yaml"], help="PLIP workflow"
+    )
 
     # XMAT and GENPOT compilation option
     parser.add_argument(
@@ -58,6 +62,9 @@ def interface():
         genPot()
     if args.version:
         print(version("plip"))
+    if  args.yaml:
+        yaml_reader(args.yaml)
+
 
 
 if __name__ == "__main__":
