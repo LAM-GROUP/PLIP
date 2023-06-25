@@ -21,7 +21,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 3.9
+        python-version: 3.8
         
 
     - name: Install dependencies
@@ -34,10 +34,10 @@ jobs:
       run: |
         pytest
       
- #   - name: Build documentation
- #     run: |
- #       sudo apt update && apt install -y  doxygen
- #       cd docs && make html
+    - name: Build documentation
+      run: |
+        sudo apt update && apt install -y  doxygen
+        cd docs && make html
 
     
 
