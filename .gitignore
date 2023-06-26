@@ -6,3 +6,6 @@ docs/_build/
 
 #Python
 **/__pycache__/
+
+#Jupyter 
+*.ipynb_checkpoints/
