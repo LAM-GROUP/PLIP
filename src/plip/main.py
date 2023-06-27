@@ -111,6 +111,7 @@ def genPot():
         except FileExistsError:
             raise RuntimeError("The coefficient directory exists")
         run_program("GENPOT", [file_path])
+        os.remove(file_path)
         move_files(".", coefficient_dir, "*.fs", "out*.txt", "*.sw")
         os.chdir("..")
 
@@ -128,4 +129,4 @@ def yaml_reader(filename):
     if data['train']:
         runLasso(data['train']['i_nature'])
     if data['genPot']:
-        pass
+        genPot()
