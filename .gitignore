@@ -8,4 +8,4 @@ docs/_build/
 **/__pycache__/
 
 #Jupyter 
-*.ipynb_checkpoints/
+**/*.ipynb_checkpoints/
