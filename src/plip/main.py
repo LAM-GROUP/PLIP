@@ -10,9 +10,12 @@ from plip.Lasso import runLasso
 from plip.utils import compile_program, move_files, run_program
 
 
-
-
 def xmat_input(config):
+    """Generate input.txt file from YAML for C++ code
+
+    Args:
+        config (dict): Dictionary with input values for generating machine learning fingerprint
+    """
     content = f"\nRcut=     {config['Rcut']}                     |DUMP= {config['DUMP']} |RAA= {config['RAA']}        |RBB= {config['RBB']}       |RAB= {config['RAB']}\n\n\n\n"
     content += "#1:GAUSSIAN     3:SW    4:STO   6:GTO   7:Lorentz       8:Asssymetric lognormal\n"
     content += "|-----------------------|-------------------------------|-----------------------|-----------------------|-------------------------------|-------------------------------|-------------------------------|\n"
@@ -22,11 +25,12 @@ def xmat_input(config):
     content += "|-----------------------|-------------------------------|-----------------------|-----------------------|-------------------------------|-------------------------------|-------------------------------|\n"
     content += f"|       {config['i_nature']}            |               {config['included']}               |   {config['a']['MIN']}     {config['a']['MAX']}   {config['a']['STEP']}   |  {config['b']['MIN']}      {config['b']['MAX']}      {config['b']['STEP']}  |               {config['2B']}               |               {config['3B']}               |               {config['NB']}               |\n"
 
-# Write the content to input.txt
+    # Write the content to input.txt
     with open("input.txt", "w") as file:
         file.write(content)
 
     print("input.txt file has been generated.")
+
 
 def compile():
     """Function to compile C++ modules"""
@@ -63,11 +67,12 @@ def genBin():
     run_program("XMAT")
 
 
-def train(args):
+def train(args, alpha=None):
     """Train LassoLars model
 
     Args:
         args (str): Type of descriptor
+        alpha (float, optional): regularization parameter
     """
     ref_forces = "Refs"
     input_dir = "Input"
@@ -79,11 +84,11 @@ def train(args):
             )
             sys.exit(1)
 
-    runLasso(args)
+    runLasso(args, alpha=alpha)
 
 
 def genPot():
-    """Generate PLIP potential"""
+    """Generate potential from Lasso coefficients"""
 
     file_pattern = "Coeff*"
     destination = "POTS"
@@ -114,19 +119,29 @@ def genPot():
         os.remove(file_path)
         move_files(".", coefficient_dir, "*.fs", "out*.txt", "*.sw")
         os.chdir("..")
+    os.remove("POTS/GenEAM.py")
+
 
 def yaml_reader(filename):
- #   filename="input.yaml"
+    """Read the YAML workflow
+
+    Args:
+        filename (str): YAML workflow name
+    """
+
     with open(filename) as f:
         data = yaml.load(f, Loader=SafeLoader)
         print(data)
-    if data['Input']:
-        xmat_input(data['Input'])
-    if data['compile']:
+    if data["Input"]:
+        xmat_input(data["Input"])
+    if data["compile"]:
         compile()
-    if data['genBin']:
+    if data["genBin"]:
         genBin()
-    if data['train']:
-        runLasso(data['train']['i_nature'])
-    if data['genPot']:
+    if data["train"]:
+        if data["train"]["alpha"] is None:
+            runLasso(data["train"]["i_nature"])
+        else:
+            runLasso(data["train"]["i_nature"], alpha=data["train"]["alpha"])
+    if data["genPot"]:
         genPot()

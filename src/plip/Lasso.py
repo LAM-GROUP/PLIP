@@ -262,11 +262,12 @@ def write_results(Y, Y_OUT, str_alpha, str_type, prefix):
 
 
 # LASSO PROCESS
-def runLasso(inputArgs, ref_dir="Refs"):
+def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
     """Run lasso Lars
 
     Args:
         inputArgs (string): Descriptor type
+        alpha (float, optional): Regularization parameter. Defaults to "None".
         ref_dir (str, optional): reference folder name. Defaults to "Refs".
     """
     print("Running LassoLars")
@@ -274,34 +275,53 @@ def runLasso(inputArgs, ref_dir="Refs"):
 
     # Split data in Train/Test
     XMAT_Train, Y_Train, XMAT_Test, Y_Test = split_data(XMAT, Yin)
-    print("\nsplit_data")
 
     with open("Output_" + str_type + ".log", "w") as fw0:
         fw0.write(
             "alpha  scoreTrain scoreTest RMSE_Train RMSE_Test MAE_Train MAE_Test numNonZeroCoeff numTotalCoeff meanAbsYTrain\n"
         )
-        for exponent in np.arange(4.0, 8.0)[::-1]:
-            for number in np.arange(1.0, 10.0)[::5]:
-                alpha = pow(10, -exponent) * number
-                alpha = round(alpha, int(exponent))
-                str_alpha = str("%.0e" % Decimal(alpha))
-                # Fit
-                #            clf = linear_model.LassoLars(alpha=alpha)
-                #            clf.fit(XMAT_Train, Y_Train)
-                clf = fit_model(alpha, XMAT_Train, Y_Train)
-                coeff = np.copy(clf.coef_)
-
-                # Score/RMSE/MAS
-                Y_OUT_Train = clf.predict(XMAT_Train)
-                Y_OUT_Test = clf.predict(XMAT_Test)
-                scoreTrain = clf.score(XMAT_Train, Y_Train)
-                scoreTest = clf.score(XMAT_Test, Y_Test)
-                RMSE_Train = np.sqrt(mean_squared_error(Y_OUT_Train, Y_Train))
-                RMSE_Test = np.sqrt(mean_squared_error(Y_OUT_Test, Y_Test))
-                MAS_Train = mean_absolute_error(Y_OUT_Train, Y_Train)
-                MAS_Test = mean_absolute_error(Y_OUT_Test, Y_Test)
-
-                print(
+        alphas = []
+        if alpha is not None:
+            alphas = [alpha]
+        else:
+            print("Generating range of alpha values:\n")
+            for exponent in np.arange(4.0, 8.0)[::-1]:
+                for number in np.arange(1.0, 10.0)[::5]:
+                    alpha = pow(10, -exponent) * number
+                    alpha = round(alpha, int(exponent))
+                    alphas.append(alpha)
+        for alpha in alphas:
+            str_alpha = str("%.0e" % Decimal(alpha))
+            # Fit
+            clf = fit_model(alpha, XMAT_Train, Y_Train)
+            coeff = np.copy(clf.coef_)
+            # Score/RMSE/MAS
+            Y_OUT_Train = clf.predict(XMAT_Train)
+            Y_OUT_Test = clf.predict(XMAT_Test)
+            scoreTrain = clf.score(XMAT_Train, Y_Train)
+            scoreTest = clf.score(XMAT_Test, Y_Test)
+            RMSE_Train = np.sqrt(mean_squared_error(Y_OUT_Train, Y_Train))
+            RMSE_Test = np.sqrt(mean_squared_error(Y_OUT_Test, Y_Test))
+            MAS_Train = mean_absolute_error(Y_OUT_Train, Y_Train)
+            MAS_Test = mean_absolute_error(Y_OUT_Test, Y_Test)
+            print(
+                alpha,
+                scoreTrain,
+                scoreTest,
+                RMSE_Train,
+                RMSE_Test,
+                MAS_Train,
+                MAS_Test,
+                sum(abs(coeff) > 1e-10),
+                np.size(coeff),
+                np.mean(abs(Y_Train)),
+            )
+            write_coefficients(coeff, str_alpha, str_type)
+            write_results(Y_Test, Y_OUT_Test, str_alpha, str_type, "ResultsTest")
+            write_results(Y_Train, Y_OUT_Train, str_alpha, str_type, "ResultsTrain")
+            fw0.write(
+                "%g  %g  %g  %g  %g   %g   %g   %g   %g   %g  \n"
+                % (
                     alpha,
                     scoreTrain,
                     scoreTest,
@@ -313,22 +333,4 @@ def runLasso(inputArgs, ref_dir="Refs"):
                     np.size(coeff),
                     np.mean(abs(Y_Train)),
                 )
-                write_coefficients(coeff, str_alpha, str_type)
-                write_results(Y_Test, Y_OUT_Test, str_alpha, str_type, "ResultsTest")
-                write_results(Y_Train, Y_OUT_Train, str_alpha, str_type, "ResultsTrain")
-
-                fw0.write(
-                    "%g  %g  %g  %g  %g   %g   %g   %g   %g   %g  \n"
-                    % (
-                        alpha,
-                        scoreTrain,
-                        scoreTest,
-                        RMSE_Train,
-                        RMSE_Test,
-                        MAS_Train,
-                        MAS_Test,
-                        sum(abs(coeff) > 1e-10),
-                        np.size(coeff),
-                        np.mean(abs(Y_Train)),
-                    )
-                )
+            )

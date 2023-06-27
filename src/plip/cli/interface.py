@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 
-from plip.main import compile, genBin, genPot, train, xmat_input, yaml_reader
+from plip.main import compile, genBin, genPot, train, yaml_reader
 from importlib.metadata import version
 
 
@@ -31,6 +31,11 @@ def interface():
         "--train", "-t", type=str, choices=["1"], help="Run the lassolars"
     )
 
+    # Additional option: alpha
+    parser.add_argument(
+        "--alpha", "-a", type=float, default=None, help="Value of alpha"
+    )
+
     # genpot
     parser.add_argument(
         "--genpot",
@@ -57,14 +62,13 @@ def interface():
     if args.genbin:
         genBin()
     if args.train:
-        train(args.train)
+        train(args.train, alpha=args.alpha)
     if args.genpot:
         genPot()
     if args.version:
         print(version("plip"))
-    if  args.yaml:
+    if args.yaml:
         yaml_reader(args.yaml)
-
 
 
 if __name__ == "__main__":
