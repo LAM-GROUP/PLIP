@@ -190,6 +190,77 @@ def setup_data(inputArgs, ref_dir):
     return XMAT, Yin, str_type
 
 
+def split_data(XMAT, Yin, split_ratio=0.95):
+    """Split the data set for testing and training
+
+    Args:
+        XMAT (nd.array): Input descriptors
+        Yin (nd.array): References
+        split_ratio (float, optional): Test-Train split ratio. Defaults to 0.95.
+
+    Returns:
+        nd.array: Test and Training data sets
+    """
+    # Split data into train and test sets
+    N_sample = np.shape(Yin)[0]
+    list_Train = random.sample(range(N_sample), int(split_ratio * N_sample))
+    list_Test = np.delete(np.arange(N_sample), list_Train)
+    XMAT_Train = XMAT[list_Train]
+    Y_Train = Yin[list_Train]
+    XMAT_Test = XMAT[list_Test]
+    Y_Test = Yin[list_Test]
+    return XMAT_Train, Y_Train, XMAT_Test, Y_Test
+
+
+def fit_model(alpha, XMAT_Train, Y_Train):
+    """Fit the lasso lars model
+
+    Args:
+        alpha (float): Regularization parameter
+        XMAT_Train (nd.array):  Training set of descriptors
+        Y_Train (nd.array): Reference training forces
+
+    Returns:
+        nd.array: Optimal coeffecients
+    """
+    # Fit the LassoLars model
+    clf = linear_model.LassoLars(alpha=alpha)
+    clf.fit(XMAT_Train, Y_Train)
+    return clf
+
+
+def write_coefficients(coeff, str_alpha, str_type):
+    """Write coeffecients to a file
+
+    Args:
+        coeff (nd.array): optimal coefficients
+        str_alpha (float): regularization parameter
+        str_type (str): Descriptor type
+    """
+    # Write coefficients to file
+    output_file = "Coeff" + str_alpha + "_" + str_type + ".txt"
+    with open(output_file, "w") as fw:
+        for i in range(np.size(coeff)):
+            fw.write("%g %g\n" % (i, coeff[i]))
+
+
+def write_results(Y, Y_OUT, str_alpha, str_type, prefix):
+    """
+
+    Args:
+        Y (nd.array): Reference values
+        Y_OUT (nd.array): Predictted values
+        str_alpha (float):  regularization parameter
+        str_type (str):  Descriptor type
+        prefix (str): Filename prefix
+    """
+    # Write results to file
+    output_file = prefix + str_alpha + "_" + str_type + ".txt"
+    with open(output_file, "w") as fw:
+        for i in range(np.size(Y)):
+            fw.write("%g %g %g \n" % (i, Y[i], Y_OUT[i]))
+
+
 # LASSO PROCESS
 def runLasso(inputArgs, ref_dir="Refs"):
     """Run lasso Lars
@@ -202,23 +273,22 @@ def runLasso(inputArgs, ref_dir="Refs"):
     XMAT, Yin, str_type = setup_data(inputArgs, ref_dir)
 
     # Split data in Train/Test
-    N_sample = np.shape(Yin)[0]
-    list_Train = random.sample(range(N_sample), int(0.95 * N_sample))
-    list_Test = np.delete(np.arange(N_sample), list_Train)
-    XMAT_Train = XMAT[list_Train]
-    Y_Train = Yin[list_Train]
-    XMAT_Test = XMAT[list_Test]
-    Y_Test = Yin[list_Test]
+    XMAT_Train, Y_Train, XMAT_Test, Y_Test = split_data(XMAT, Yin)
+    print("\nsplit_data")
 
-    with open("Out_" + str_type + ".log", "w") as fw0:
+    with open("Output_" + str_type + ".log", "w") as fw0:
+        fw0.write(
+            "alpha  scoreTrain scoreTest RMSE_Train RMSE_Test MAE_Train MAE_Test numNonZeroCoeff numTotalCoeff meanAbsYTrain\n"
+        )
         for exponent in np.arange(4.0, 8.0)[::-1]:
             for number in np.arange(1.0, 10.0)[::5]:
                 alpha = pow(10, -exponent) * number
                 alpha = round(alpha, int(exponent))
                 str_alpha = str("%.0e" % Decimal(alpha))
                 # Fit
-                clf = linear_model.LassoLars(alpha=alpha)
-                clf.fit(XMAT_Train, Y_Train)
+                #            clf = linear_model.LassoLars(alpha=alpha)
+                #            clf.fit(XMAT_Train, Y_Train)
+                clf = fit_model(alpha, XMAT_Train, Y_Train)
                 coeff = np.copy(clf.coef_)
 
                 # Score/RMSE/MAS
@@ -243,24 +313,12 @@ def runLasso(inputArgs, ref_dir="Refs"):
                     np.size(coeff),
                     np.mean(abs(Y_Train)),
                 )
-
-                output_file = "Coeff" + str_alpha + "_" + str_type + ".txt"
-                with open(output_file, "w") as fw:
-                    for i in np.arange(np.size(coeff)):
-                        fw.write("%g %g\n" % (i, coeff[i]))
-
-                output_file = "ResultsTest" + str_alpha + "_" + str_type + ".txt"
-                with open(output_file, "w") as fw:
-                    for i in np.arange(np.size(Y_Test)):
-                        fw.write("%g %g %g \n" % (i, Y_Test[i], Y_OUT_Test[i]))
-
-                output_file = "ResultsTrain" + str_alpha + "_" + str_type + ".txt"
-                with open(output_file, "w") as fw:
-                    for i in np.arange(np.size(Y_Train)):
-                        fw.write("%g %g %g \n" % (i, Y_Train[i], Y_OUT_Train[i]))
+                write_coefficients(coeff, str_alpha, str_type)
+                write_results(Y_Test, Y_OUT_Test, str_alpha, str_type, "ResultsTest")
+                write_results(Y_Train, Y_OUT_Train, str_alpha, str_type, "ResultsTrain")
 
                 fw0.write(
-                    "%g %g %g %g %g %g %g %g %g %g  \n"
+                    "%g  %g  %g  %g  %g   %g   %g   %g   %g   %g  \n"
                     % (
                         alpha,
                         scoreTrain,
