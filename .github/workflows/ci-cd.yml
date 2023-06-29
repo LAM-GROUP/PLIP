@@ -32,7 +32,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest
+        cd  tests && pytest
       
     - name: Build documentation
       run: |
