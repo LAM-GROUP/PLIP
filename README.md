@@ -1,3 +1,4 @@
+![](logo.png)
 [![Continuous Integration](https://github.com/LAM-GROUP/PLIP/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/LAM-GROUP/PLIP/actions/workflows/ci-cd.yml)
 [![Documentation Status](https://readthedocs.org/projects/plip/badge/?version=latest)](https://plip.readthedocs.io/en/latest/?badge=latest)
 
@@ -5,11 +6,11 @@
 # Installation
 ```
 git clone https://github.com/LAM-GROUP/PLIP.git
-cd  plip
-pip install -e .
+cd  PLIP
+pip install .
 ```
 # Documentation
-The full documentation is available at [plip.readthedocs.io](plip.readthedocs.io).
+The full documentation is available at [plip.readthedocs.io](https://plip.readthedocs.io/en/latest/index.html#).
 
 # Authors
 The PLIP package was  developed by Julien Lam, Akshay Krishna AK, Aurélien Roux
