@@ -8,13 +8,15 @@ Welcome to PLIP's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: User Guide:
+   
+   source/Introduction.rst
+   source/Installation.rst
+   source/plip.rst
+   source/plip_cpp.rst
+   source/Development.rst
+   source/About.rst
 
-Docs
-====
-
-.. doxygenfile:: mod_XYZ.h
-   :project: PLIP
 
 Indices and tables
 ==================
