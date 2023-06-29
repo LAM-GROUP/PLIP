@@ -1,27 +1,19 @@
-# Short description of PLIP code
+[![Continuous Integration](https://github.com/LAM-GROUP/PLIP/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/LAM-GROUP/PLIP/actions/workflows/ci-cd.yml)
+[![Documentation Status](https://readthedocs.org/projects/plip/badge/?version=latest)](https://plip.readthedocs.io/en/latest/?badge=latest)
 
-This section contains a brief description on the usage of PLIP code as of 13 January 2022. The method consists of 3 steps:
+`PLIP` (Physical LassoLars Interactions Potential) is a Python package for machine learning interatomic potentials for materials modelling. Physical Lasso-Lars Interaction Potential (PLIP) has been developed to address the lack of interpretability of MLIPs. PLIP uses a physically motivated mathematical formulation for the potential and a constrained linear regression. The MLIP is constructed as a linear combination of classical interactions, including two-body, three-body, and many-body interactions. These interactions are made up of simple functions such as Lennard-Jones, Gaussian, and Slatter-type orbitals, as well as explicit angular functions and embedded atom-like interactions. 
+# Installation
+```
+git clone https://github.com/LAM-GROUP/PLIP.git
+cd  plip
+pip install -e .
+```
+# Documentation
+The full documentation is available at [plip.readthedocs.io](plip.readthedocs.io).
 
+# Authors
+The PLIP package was  developed by Julien Lam, Akshay Krishna AK, Aurélien Roux
 
-* **XMAT** 
-
-    Construct matrices with each row corresponding to a force (X,Y,Z) on a specific atom and each column corresponding to a descriptor. The input arguments required are:
-
-  1. The file **input.txt** that summarizes the list of descriptors. 
- 
-  2. **Input/** folder with all the input files for the database  
- 
-* **Lasso**
-
-    Read the matrices and the DFT forces to construct the PLIP using LassoLars. For that purpose, the "lammpsstrj" (forces) and the "bin" (descriptor) files must be moved respectively to "Input/" and "Input_1/" and one needs to run "./xLasso". We test different values for alpha and results are moved in a folder "Output_1/"
-
-* **GenPot**
-
-    Read the obtained linear coefficients and construct the LAMMPS file for the potential. The "Coeff???.txt" file that is given by "2_Lasso" must be moved in the root of the folder and the code is the run with "./xGen"
-
-Once the potential is obtained, one can start running LAMMPS simulations. For that purpose, the files obtained with GenPot are moved in "4_MD/zPOT".
-
-For details on the methodology, please refer to this paper with a particular emphasis on the appendix:
-<https://iopscience.iop.org/article/10.1088/2632-2153/abc9fd>
-
+# License
+The PLIP package  is distributed under terms of [GNU GPLv3](https://github.com/LAM-GROUP/PLIP/LICENSE).
 
