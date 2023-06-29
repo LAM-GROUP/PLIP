@@ -1,3 +1,20 @@
+## 0.3.0 (2023-06-29)
+
+### Feat
+
+- Train a potential with single alpha value of choice of the user from yaml and cli interface
+- Yaml workflow for training PLIP
+
+### Fix
+
+- Remove coefficient.txt files after generating potential
+- Scikit-learn version dependency switched to 1.0.0
+
+### Refactor
+
+- RunLasso function divided into separate functions for better readability
+- Broken down existing functions to ease testing
+
 ## 0.2.0 (2023-06-02)
 
 ### Feat
