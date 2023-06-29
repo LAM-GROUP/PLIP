@@ -3,7 +3,9 @@ import os
 from plip.main import *
 from unittest.mock import Mock
 
-def test_write_input():
+
+
+def test_xmat_input():
      
     config = {
         'Rcut': 10,
@@ -44,7 +46,7 @@ def sample_yaml(tmpdir):
         },
         "compile": 0,
         "genBin": 0,
-        "train": {"i_nature": "1"},
+        "train": {"i_nature": "1","alpha": None},
         "genPot": True,
     }
     yaml_file = tmpdir.join("test.yaml")
@@ -58,10 +60,12 @@ def test_yaml_reader(sample_yaml,monkeypatch):
     mock_compile = Mock()
     mock_genBin = Mock()
     mock_runLasso = Mock()
+    mock_genPot = Mock()
 
     monkeypatch.setattr("plip.main.xmat_input", mock_xmat_input)
     monkeypatch.setattr("plip.main.compile", mock_compile)
     monkeypatch.setattr("plip.main.genBin", mock_genBin)
+    monkeypatch.setattr("plip.main.genPot", mock_genPot)
     monkeypatch.setattr("plip.main.runLasso", mock_runLasso)
 
     yaml_reader(sample_yaml)
@@ -69,6 +73,7 @@ def test_yaml_reader(sample_yaml,monkeypatch):
     assert mock_xmat_input.called_once
     assert mock_compile.called_once
     assert mock_genBin.called_once
+    assert mock_genPot.called_once
 
 
 
