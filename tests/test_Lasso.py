@@ -1,17 +1,34 @@
 import pytest
+import os
 import numpy as np
 from plip.Lasso import *
 
 
+
+
+
+@pytest.fixture(scope='session', autouse=True)
+def cleanup_generated_data(request):
+    # Set up
+    yield
+
+
+    # Teardown: Clean up the generated data
+    generated_files = ['test_forces.txt', 'test_forces_with_nan.txt','input.txt']
+    for file in generated_files:
+        if os.path.exists(file):
+            os.remove(file)
+
+
 @pytest.mark.parametrize(
-    "num, output", [("test_data.forces", 4), ("test_data_w_b_l.forces", 6)]
+    "num, output", [("testdata/test_data.forces", 4), ("testdata/test_data_w_b_l.forces", 6)]
 )
 def test_getNatoms(num, output):
     num_lines = getNatoms(num)
     assert num_lines == output
 
 
-def test_readForces():
+def test_readForces(cleanup_generated_data):
     input_file = "test_forces.txt"
     forces = np.array([[1.0, 2.0, 3.0], [4.0, 5.0, 6.0], [7.0, 8.0, 9.0]])
     np.savetxt(input_file, forces, header="force")
