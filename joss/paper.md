@@ -30,23 +30,28 @@ In this work, we have developed an alternative MLIP called Physical LassoLars In
 
 
 # Statement of need
-PLIP is a Python package for constructing interpretable MLIP for atomic simulation of materials. The PLIP interaction potential is constructed by mapping the local atomic environment to a set of  translational, rotational and permutationally invariant descriptors. The detailed iinformation about construction of PLIP can be found [@Benoit2020Dec]
-
-Machine-learning interaction potentials (MLIP) have recently been proposed as a means to bridge the gap between quantum accurate calculations and fast empirical modeling. The main principle behind MLIP involves utilizing a large set of quantum-accurate calculations to adjust parameters within a universal mathematical formulation representing the interaction potential. Various approaches have been suggested, including Artificial Neural Networks, Gaussian approximation potentials, Linearized potentials, Spectral Neighbor Analysis Potential, Symmetric Gradient Domain Machine learning, and Moment Tensor Potentials. These MLIP methods have shown success in studying a wide range of materials, including pure metals, organic molecules, water, amorphous materials, and hybrid perovskites. However, one key issue with current MLIP methods is their designation as "black boxes," lacking physical and chemical interpretability of the obtained potential.
+Machine-learning interaction potentials (MLIP) have recently been proposed as a means to bridge the gap between quantum accurate calculations and fast empirical modeling. The main principle behind MLIP involves utilizing a large set of quantum-accurate calculations to adjust parameters within a universal mathematical formulation representing the interaction potential. Various approaches have been suggested, including Artificial Neural Networks, Gaussian approximation potentials, Linearized potentials, Spectral Neighbor Analysis Potential, Symmetric Gradient Domain Machine learning, and Moment Tensor Potentials. These MLIP methods have shown success in studying a wide range of materials, including pure metals, organic molecules, water, amorphous materials, and hybrid perovskites. However, one key issue with current MLIP methods is they lack physical and chemical interpretability of the obtained potential.
 
 
-
-
-# Components
-
-# Citations
+PLIP is a Python package for constructing interpretable MLIP for atomic simulation of materials. The PLIP interaction potential is constructed by mapping the local atomic environment to a set of  translational, rotational and permutationally invariant descriptors. The detailed information about the construction of PLIP potential can be found [@Benoit2020Dec].
 
 
 
-# Figures
 
 
-# Acknowledgements
+
+
+
+# Functionality
+The PLIP software package can be primarily divided into three parts.  Firstly, the generation of machine learning finger print (descriptors) for structures provided in the data set. The PLIP package makes use of efficieint C++ routine to generate the ML descriptors, and this is achieved with the `XMAT` class. PLIP currently supports two-body, three-body and N-body descriptors. The basis functions for the descriptors can be chosen from functions like Gaussians, Lorentzian or asymmetric log-normal functions. The three-body descriptor formulation is very similar to the Stillinger–Weber potential [@Stillinger1985Apr] and N-body descriptors are generalized form of the embedded atom potential (EAM) [@Daw1984Jun] .
+
+In the second part, the fitting procedure is performed using Lasso regression with the Least Angle Regression Scheme (together LassoLars). The PLIP package makes use of the efficient LassoLars implementation in scikit-learn python machine learning package to optimize the coeffecients. 
+
+In the third and final part, the optimised coffecients are converted to LAMMPS compatable potentials. This is performed by the `GENPOT` routine written in C++. The two-body potentials are tabulated as spline tables. For three-body and N-body potentials a custom in-house made version of LAMMPS is required.  A general layout of the functioning of plip package is shown in \autoref{fig:plip}
+![Interface for PLIP \label{fig:plip}](/images/plip.png)
+# Funding
+
+
 
 
 # References
