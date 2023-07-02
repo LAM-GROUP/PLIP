@@ -13,4 +13,6 @@ sphinx:
 
 python:
   install:
+    - method: pip
+      path: .                                   # Install the module plip first
     - requirements: docs/requirements.txt
