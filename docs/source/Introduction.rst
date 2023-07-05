@@ -15,7 +15,6 @@ potential `PLIP descriptors <plip_>`_ and a constrained linear regression. The p
 PLIP layout
 -----------
 .. figure:: ../images/PLIP.png
-   :scale: 60 %
    :align: center
 
 The process of generation of PLIP based machine learning interatomic potentials can be divided into three parts :
