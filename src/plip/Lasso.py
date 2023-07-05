@@ -1,12 +1,15 @@
 """ This package contains the LASSO-LARS implementation for PLIP. """
 
 import glob
+import os
 import random
 from decimal import Decimal
 
 
 import numpy as np
 from sklearn import linear_model
+
+# from sklearn.pipeline import make_pipeline
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 
@@ -164,6 +167,8 @@ def setup_data(inputArgs, ref_dir):
     #    N_sample = 100
     #    i_select = 1
 
+    if not os.path.exists(ref_dir):
+        raise FileNotFoundError(f"The directory '{ref_dir}' does not exist.")
     # Data reading
     search = f"{ref_dir}/*.forces"
     input_file = sorted(glob.glob(search))[0]
@@ -269,6 +274,11 @@ def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
         inputArgs (string): Descriptor type
         alpha (float, optional): Regularization parameter. Defaults to "None".
         ref_dir (str, optional): reference folder name. Defaults to "Refs".
+
+    Returns:
+        tuple: A tuple containing the following elements:
+            - scoreTrain (float): R-squared score on the training data.
+            - scoreTest (float): R-squared score on the test data.
     """
     print("Running LassoLars")
     XMAT, Yin, str_type = setup_data(inputArgs, ref_dir)
@@ -334,3 +344,4 @@ def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
                     np.mean(abs(Y_Train)),
                 )
             )
+        return (scoreTrain, scoreTest)
