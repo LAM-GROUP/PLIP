@@ -5,12 +5,11 @@ import os
 import random
 from decimal import Decimal
 
-
 import numpy as np
-from sklearn import linear_model
-
-# from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LassoLars
 from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 
 # Read number of atoms
@@ -229,8 +228,10 @@ def fit_model(alpha, XMAT_Train, Y_Train):
         nd.array: Optimal coeffecients
     """
     # Fit the LassoLars model
-    clf = linear_model.LassoLars(alpha=alpha)
-    clf.fit(XMAT_Train, Y_Train)
+    model = make_pipeline(
+        StandardScaler(with_mean=True), LassoLars(alpha)
+    )  # Is with_mean True or false
+    clf = model.fit(XMAT_Train, Y_Train)
     return clf
 
 
@@ -304,7 +305,7 @@ def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
             str_alpha = str("%.0e" % Decimal(alpha))
             # Fit
             clf = fit_model(alpha, XMAT_Train, Y_Train)
-            coeff = np.copy(clf.coef_)
+            coeff = np.copy(clf[-1].coef_)
             # Score/RMSE/MAS
             Y_OUT_Train = clf.predict(XMAT_Train)
             Y_OUT_Test = clf.predict(XMAT_Test)
