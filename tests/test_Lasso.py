@@ -4,24 +4,27 @@ import numpy as np
 from plip.Lasso import *
 
 
-
-
-
-@pytest.fixture(scope='session', autouse=True)
+@pytest.fixture(scope="session", autouse=True)
 def cleanup_generated_data(request):
     # Set up
     yield
 
-
     # Teardown: Clean up the generated data
-    generated_files = ['test_forces.txt', 'test_forces_with_nan.txt','input.txt']
-    for file in generated_files:
-        if os.path.exists(file):
-            os.remove(file)
+    generated_files = [
+        "test_forces.txt",
+        "test_forces_with_nan.txt",
+        "input.txt",
+        "Coeff1e-07_1.txt",
+        "Output_1.log",
+        "ResultsTest1e-07_1.txt",
+        "ResultsTrain1e-07_1.txt",
+    ]
+    [os.remove(file) for file in generated_files if os.path.exists(file)]
 
 
 @pytest.mark.parametrize(
-    "num, output", [("testdata/test_data.forces", 4), ("testdata/test_data_w_b_l.forces", 6)]
+    "num, output",
+    [("testdata/test_data.forces", 4), ("testdata/test_data_w_b_l.forces", 6)],
 )
 def test_getNatoms(num, output):
     num_lines = getNatoms(num)
@@ -68,5 +71,10 @@ def test_readBinaryFiles():
     assert np.array_equal(r_xmat, expected_xmat)
 
 
-def test_newreadFile():
-    pass
+def test_runLasso():
+    inputArgs = "1"
+    alpha = 1e-07
+    Refs = "testdata/fit_pot/Refs"
+    score_train, score_test = runLasso(inputArgs, alpha, ref_dir=Refs)
+    assert 0.93 <= score_train <= 1
+    assert 0.9 <= score_test <= 1
