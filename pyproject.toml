@@ -14,7 +14,7 @@ version = "0.3.0"
 license = { "file" = "LICENSE" }
 readme = "README.md"
 dependencies = [
-    "scikit-learn ~=1.0.0",
+    "scikit-learn",
 	"PyYAML       ~=6.0",
     "atsim.potentials ~=0.2.0",
 ]
