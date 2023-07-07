@@ -1,3 +1,10 @@
+## 0.3.1 (2023-07-07)
+
+### Fix
+
+- Compatability with lastest scikit-learn, by overriding normalize with pipeline approach.
+- fixed raising  Filenotfound error if reference folder not found.
+
 ## 0.3.0 (2023-06-29)
 
 ### Feat
