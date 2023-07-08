@@ -52,7 +52,7 @@ The PLIP software package can be primarily divided into three parts.  Firstly, t
 
 In the second part, the fitting procedure is performed using Lasso regression with the Least Angle Regression Scheme (together LassoLars). The PLIP package makes use of the efficient LassoLars implementation in scikit-learn python machine learning package to optimize the coefficients. 
 
-In the third and final part, the optimized coefficients are converted to LAMMPS compatible potentials. This is performed by the `GENPOT` routine written in C++. The two-body potentials are tabulated as spline tables. The three-body and N-body potentials are stored as LAMMPS compatible  Stillinger-Weber and EAM format respectively.  To use three-body and N-body potentials a custom  version of LAMMPS is required.  A general layout of the functioning of plip package is shown in \autoref{fig:plip}
+In the third and final part, the optimized coefficients are converted to LAMMPS compatible potentials. This is performed by the `GENPOT` routine written in C++. The two-body potentials are tabulated as spline tables. The three-body and N-body potentials are stored as LAMMPS compatible  Stillinger-Weber and EAM format respectively.  To use three-body and N-body potentials a custom  version of LAMMPS is required.  A general layout  plip package is shown in \autoref{fig:plip}
 ![\label{fig:plip}](images/plip.png)
 
 # Funding
