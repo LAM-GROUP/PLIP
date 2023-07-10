@@ -1,3 +1,9 @@
+## 0.3.2 (2023-07-10)
+
+### Fix
+
+- #2 Upgraded to C++17 version and removed awk dependency for listing files
+
 ## 0.3.1 (2023-07-07)
 
 ### Fix
