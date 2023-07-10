@@ -1,3 +1,9 @@
+## 0.3.3 (2023-07-10)
+
+### Fix
+
+- #3 Warning added to make sure that POSCAR files are in Cartesian format
+
 ## 0.3.2 (2023-07-10)
 
 ### Fix
