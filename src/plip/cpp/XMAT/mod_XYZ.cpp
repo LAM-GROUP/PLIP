@@ -65,6 +65,13 @@ void strucXYZ::doReadXYZ(string input_file)
 //		NB=0;
 	N_atoms_=NA+NB;
 	getline(myfile,line);
+	string coord_type=line;
+	if (coord_type != "Cartesian") {
+        cout << "POSCAR format: " << coord_type << endl;
+        cout << "FileError: POSCAR not in Cartesian format" << endl;
+        exit(1); 
+    }
+
 
 	
       
