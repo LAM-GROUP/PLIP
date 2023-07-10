@@ -29,7 +29,7 @@ def compile_program(program_name, source_files, export_name):
 
     export_path = str(script_directory.parent.parent.absolute()) + f"/bin/{export_name}"
     comp = subprocess.run(
-        ["g++", "-std=c++11"] + source_files + ["-o", export_path, "-fopenmp"],
+        ["g++", "-std=c++17"] + source_files + ["-o", export_path, "-fopenmp"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -77,3 +77,6 @@ def move_files(source_dir, destination_dir, *file_patterns):
         files = glob.glob(os.path.join(source_dir, pattern))
         for file in files:
             shutil.move(file, destination_dir)
+
+
+

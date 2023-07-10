@@ -18,6 +18,7 @@
 #include <dirent.h>
 #include <string.h>
 #include <unistd.h>
+#include <filesystem>
 #include "mod_fonction.h"
 #include "mod_tool.h"
 #include "mod_XYZ.h"
@@ -58,11 +59,22 @@ int main(int argc,char* argv[])
 	cout<<"R_BB="<<Rshort[1]<<endl;
 	cout<<"R_AB="<<Rshort[2]<<endl;
 
+    // Read filenames ending in POSCAR 
+//	vector<string> file_names;
+	ofstream tmp_stream("TMP");
+	for (const auto& entry : std::filesystem::directory_iterator(input_folder)) {
+		if (entry.path().extension() == ".poscar") {
+   //         file_names.push_back(entry.path().string());
+			 tmp_stream <<entry.path().string() << std::endl;
+        }
+	}
+	tmp_stream.close();
 
-	string command="ls -l "+input_folder+"/*poscar | shuf  | awk '{ print $9 }' > TMP";
-	system(command.c_str());
+	//string command="ls -l "+input_folder+"/*poscar | shuf  | awk '{ print $9 }' > TMP";
+	//system(command.c_str());
+	//  A TMP file dependency could be avoided in the future by directly using file_names list
 	ifstream infile("TMP");
-	
+
 	vector<string> list_files;
 	while (infile >> line)
 	{
