@@ -6,6 +6,8 @@
 # Documentation
 The full documentation is available at [plip.readthedocs.io](https://plip.readthedocs.io/en/latest/index.html#).
 
+# Tutorial
+**Colab Python notebook tutorial:** [https://colab.research.google.com/github/LAM-GROUP/PLIP/blob/main/PLIPwithLAMMPS.ipynb](https://colab.research.google.com/github/LAM-GROUP/PLIP/blob/main/PLIPwithLAMMPS.ipynb)
 # Installation
 ```
 git clone https://github.com/LAM-GROUP/PLIP.git
@@ -15,8 +17,8 @@ pip install -e .
 
 # Dependencies
 * Python 3.8+
-* C++17
-* `gcc` 5.0 and above compiler
+* Support for C++17
+* Compiler `gcc` 6.0 and above
 * Python dependencies: see `pyproject.toml`
 * LAMMPS
 
