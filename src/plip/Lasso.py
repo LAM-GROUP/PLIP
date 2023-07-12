@@ -315,18 +315,7 @@ def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
             RMSE_Test = np.sqrt(mean_squared_error(Y_OUT_Test, Y_Test))
             MAS_Train = mean_absolute_error(Y_OUT_Train, Y_Train)
             MAS_Test = mean_absolute_error(Y_OUT_Test, Y_Test)
-            print(
-                alpha,
-                scoreTrain,
-                scoreTest,
-                RMSE_Train,
-                RMSE_Test,
-                MAS_Train,
-                MAS_Test,
-                sum(abs(coeff) > 1e-10),
-                np.size(coeff),
-                np.mean(abs(Y_Train)),
-            )
+            print(f"\n alpha:{alpha} Train error:{RMSE_Train} Test error:{RMSE_Test}\n ")
             write_coefficients(coeff, str_alpha, str_type)
             write_results(Y_Test, Y_OUT_Test, str_alpha, str_type, "ResultsTest")
             write_results(Y_Train, Y_OUT_Train, str_alpha, str_type, "ResultsTrain")
