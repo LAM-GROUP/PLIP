@@ -1,5 +1,5 @@
 ---
-title: 'PLIP: A  python package for linearized machine learning interatomic potentials'
+title: 'PLIP: A  hybrid python/C++ package for linearized machine learning interatomic potentials'
 tags:
   - Python
   - Chemistry
@@ -29,7 +29,7 @@ Molecular Dynamics (MD) simulations play a crucial role in understanding and pre
 In this work, we have developed an alternative MLIP called Physical LassoLars Interaction Potential (PLIP) which combines a physically motivated mathematical formulation for the potential, optimized with a constrained linear regression algorithm. The primary goal of PLIP  package is to provide a transparent and interpretable machine-learning interaction potential while maintaining accuracy and efficiency. The development of an accurate and interpretable interatomic potential is highly useful, as it can provide deeper insights into material behaviors and facilitate the design of new materials with desired properties for diverse applications.
 
 # Statement of need
-PLIP is a python package for constructing interpretable MLIP for atomic simulation of materials. The construction of the PLIP interaction potential involves several key steps. First, the local atomic environment is represented using a combination of translational, rotational, and permutational invariant descriptors. These descriptors encode crucial information about the positions and orientations of neighboring atoms around a central atom. Different models for descriptors have been proposed in the literature, such as moment tensors[@Novoselov2019Jun], atom-centered symmetry functions (ACSFs)[@Behler2011Feb], smooth overlap of atomic positions (SOAP)[@Bartok2013May], bispectrum components[@Bartok2013May,@Thompson2015Mar], among others. Among these alternatives,we chose to use explicitly two-body, three-body, and N-body descriptors with the following equations:
+PLIP is a hybrid python/C++ package for constructing interpretable MLIP for atomic simulation of materials. The construction of the PLIP interaction potential involves several key steps. First, the local atomic environment is represented using a combination of translational, rotational, and permutational invariant descriptors. These descriptors encode crucial information about the positions and orientations of neighboring atoms around a central atom. Different models for descriptors have been proposed in the literature, such as moment tensors[@Novoselov2019Jun], atom-centered symmetry functions (ACSFs)[@Behler2011Feb], smooth overlap of atomic positions (SOAP)[@Bartok2013May], bispectrum components[@Bartok2013May,@Thompson2015Mar], among others. Among these alternatives,we chose to use explicitly two-body, three-body, and N-body descriptors with the following equations:
 
 $$
 \begin{aligned}
