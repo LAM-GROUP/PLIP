@@ -1,3 +1,9 @@
+## 0.3.4 (2023-07-12)
+
+### Refactor
+
+- Concise message with output values after Lasso training
+
 ## 0.3.3 (2023-07-10)
 
 ### Fix
