@@ -1,0 +1,28 @@
+units           metal
+dimension       3
+boundary        p p p
+
+read_data	IN.data
+
+pair_style  hybrid/overlay table linear 1000
+
+pair_coeff      1 1  table           ../POTS/Coeff1e-06_1/out2B_0.txt LARS_2B 6
+pair_coeff      2 2  table           ../POTS/Coeff1e-06_1/out2B_1.txt LARS_2B 6
+pair_coeff      1 2  table           ../POTS/Coeff1e-06_1/out2B_2.txt LARS_2B 6
+
+
+mass            1 28.0855
+mass            2 15.999
+
+thermo		10
+
+
+fix             box1 all box/relax tri 0.0
+thermo_style 	custom step cella cellb cellc cellalpha cellbeta cellgamma 
+dump            002 all custom 10 dump_xyz.lammpstrj id type x y z fx fy fz
+dump_modify     002 sort id
+
+minimize        1.0e-12 1.0e-12 15000 20000
+
+           
+
