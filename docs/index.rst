@@ -12,6 +12,8 @@ Welcome to PLIP's documentation!
    
    source/Introduction.rst
    source/Installation.rst
+   source/model.rst
+   source/runplip.rst
    source/plip.rst
    source/plip_cpp.rst
    source/Development.rst
