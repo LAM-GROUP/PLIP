@@ -13,9 +13,9 @@ using namespace std;
 class strucXYZ 
 {
     private:
-        int N_atoms_; 								///< Number of atoms
+        int N_atoms_; 								/**< Get number of atoms */
         int N_times_; 								///< XXXX
-	vector<vector<vector<double>>>  pos_;
+	vector<vector<vector<double>>>  pos_;			/**< Position vectors*/
 	vector<vector<vector<vector<double>>>>  dx_;
 	vector<vector<vector<double>>>  distance_;
 	vector<vector<vector<int>>>  distanceTYPE_;
@@ -52,7 +52,7 @@ class strucXYZ
 	 */
 	int GetN_atoms() const {return N_atoms_;};
 	/**
-	 * @brief  XXXX
+	 * @brief  Get number of atoms*
 	 * 
 	 * @return int 
 	 */
@@ -75,7 +75,7 @@ class strucXYZ
 	 */
 	vector<vector<vector<double>>>  	GetPos() 	  const {return pos_;};
 	/**
-	 * @brief XXX
+	 * @brief Get the position vectors
 	 * 
 	 * @return vector<vector<vector<vector<double>>>> 
 	 */

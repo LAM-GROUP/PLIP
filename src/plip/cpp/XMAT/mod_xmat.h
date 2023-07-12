@@ -16,13 +16,13 @@ using namespace std;
 class XMAT
 {
     private:
-        int i_nature_; 
-        int check2B_; 
-	int N_l3B_;	
-	int N_lNB_;	
+        int i_nature_; /**< Number for descriptor type */
+        int check2B_;  /**< Check if two body required */
+	int N_l3B_;	       /**< m value for three body */
+	int N_lNB_;	       /**< l value for N-body body  */
 
-        vector<double> list_a_;  // List of function parameters
-	vector<double> list_b_;  // List of function parameters
+        vector<double> list_a_;  /**< List of function parameters for 'a' */
+	vector<double> list_b_;      /**< List of function parameters for 'b' */
 
     public:
 	/**
@@ -35,7 +35,7 @@ class XMAT
 	 * @param b_init Minimum value for parameter b.
 	 * @param b_end Max value for parameter b.
 	 * @param b_step step size for parameter b.
-	 * @param i_nature  type of potential used. @see 
+	 * @param i_nature  type of potential used. 
 	 * @param check2B  value for 2-body.
 	 * @param N_l3B   value for 3-body.
 	 * @param N_lNB  value for N-body.

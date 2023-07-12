@@ -72,4 +72,8 @@ html_static_path = ['_static']
 breathe_projects = {
 	"PLIP": "_build/xml/"
 }
-breathe_default_project = "PLIP"
+
+breathe_projects_source = {
+    "auto" : ( "../../PLIP/src/plip/cpp/XMAT/", ["mod_xmat.h","mod_XYZ.h","mod_tool.h","mod_fonction.h"] )
+}
+#breathe_default_project = "PLIP"
