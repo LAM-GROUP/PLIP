@@ -26,12 +26,15 @@ class strucXYZ
     public:
 	/// Constructor
 	strucXYZ();
+	                        
 	/**
 	 * @brief The function is used to read the input file
 	 * 
 	 * @param input_file  The filename for the input 
+	 * 
+	 * @param species Atom types present
 	 */
-	void doReadXYZ(string input_file);
+	void doReadXYZ(string input_file, vector<string> species);
 	/**
 	 * @brief Function used to compute pairwise distances
 	 * 

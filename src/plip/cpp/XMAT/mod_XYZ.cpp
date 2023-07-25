@@ -18,7 +18,7 @@ strucXYZ::strucXYZ()
 		L_[i][j]=0;
 }
 
-void strucXYZ::doReadXYZ(string input_file)
+void strucXYZ::doReadXYZ(string input_file, vector<string> species)
 {
 	string line;
 	ifstream myfile(input_file);
@@ -46,17 +46,36 @@ void strucXYZ::doReadXYZ(string input_file)
 	NA=0;
 	NB=0;
 	getline(myfile,line);
-	stringstream in(line);  
-	if (linetype.find("Si") != std::string::npos) 
+	stringstream in(line); 
+	cout <<"Atom types:"<<species.size ()<<endl;
+
+	if (species.size ()== 2)
+	{
+
+	if (linetype.find(species[0]) != std::string::npos) 
 	{		
-		if (linetype.find("O") != std::string::npos) 
+		if (linetype.find(species[1]) != std::string::npos) 
 			in>>NA>>NB;
 		else
 			in>>NA;
 	}
 	else
 		in>>NB;
-	cout<<"Na="<<NA<<"  Nb="<<NB<<endl;
+
+	cout<<species[0]<<":"<<NA<<" "<<species[1]<<":"<<NB<<endl;
+	}
+	else if (species.size () == 1)
+	{
+		if (linetype.find(species[0]) != std::string::npos) 
+			in>>NA;
+		cout<<species[0]<<":"<<NA<<endl;
+	}
+	else
+	{
+		cout<<"Number of atom types greater than 2 not supported"<<endl;
+		exit(1);
+	}
+//	cout<<"Na="<<NA<<"  Nb="<<NB<<endl;
 
 
 //

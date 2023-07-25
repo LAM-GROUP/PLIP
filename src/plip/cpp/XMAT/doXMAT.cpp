@@ -45,19 +45,41 @@ int main(int argc,char* argv[])
 	double Rshort[3];	
 	string input_folder;
 	string output_folder;
+    string line;
 
-        string line;
-	std::getline( myfile, line );
+	// First line of the file for defining species
+	getline( myfile, line );
+	stringstream ss(line);
+	string word;
+	vector<string>  species;
+
+	 while (std::getline(ss, word, ' ')) {
+        // Extract the species after the equals sign
+        if (!word.empty()) {
+            if (species.size() > 2) {
+                cout<<"Error: Species size exceeds 2."<<endl;
+				exit(1);
+            }
+            species.push_back(word);
+        }
+    }
+	// Second line of the file
 	string tmp; 
 	myfile >> tmp>>Rcut>>tmp>>input_folder>>tmp>>Rshort[0]>>tmp>>Rshort[1]>>tmp>>Rshort[2];
 	myfile.close();
 
         cout<<"=====================     INITIALIZATION     ====================="<<endl;
 	cout<<"Input_folder="<<input_folder<<endl;
-	cout<<"Rcut="<<Rcut<<endl;
+	for (const auto& s : species) {
+        std::cout << s;
+    }
+	cout<<"\nRcut="<<Rcut<<endl;
 	cout<<"R_AA="<<Rshort[0]<<endl;
 	cout<<"R_BB="<<Rshort[1]<<endl;
 	cout<<"R_AB="<<Rshort[2]<<endl;
+
+	// Pop the first element of species
+	species.erase(species.begin());
 
     // Read filenames ending in POSCAR 
 //	vector<string> file_names;
@@ -87,7 +109,7 @@ int main(int argc,char* argv[])
 
 		// Read positions from input_file
 		strucXYZ xyz;
-                xyz.doReadXYZ(input_file);
+                xyz.doReadXYZ(input_file,species);
                 xyz.doComputeDistances(Rcut);
                 xyz.doComputeAngles(Rcut);
 		cout<<"Distances and angles DONE"<<endl;

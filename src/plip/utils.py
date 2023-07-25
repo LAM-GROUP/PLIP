@@ -55,7 +55,7 @@ def run_program(program_name, program_args=[]):
     script_directory = Path(__file__).parent.parent.parent.absolute()
     program_path = str(script_directory) + f"/bin/{program_name}"
     try:
-        subprocess.run(
+        runner = subprocess.run(
             [program_path] + program_args, stderr=subprocess.PIPE, check=True
         )
     except FileNotFoundError as e:
@@ -64,6 +64,8 @@ def run_program(program_name, program_args=[]):
         )
         print(f"Error:{e}")
         sys.exit(1)
+   
+
 
 
 def move_files(source_dir, destination_dir, *file_patterns):
