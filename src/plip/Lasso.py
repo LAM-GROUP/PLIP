@@ -228,11 +228,10 @@ def fit_model(alpha, XMAT_Train, Y_Train):
         nd.array: Optimal coeffecients
     """
     # Fit the LassoLars model
-    model = make_pipeline(
-        StandardScaler(with_mean=True), LassoLars(alpha)
-    )  # Is with_mean True or false
+    model = make_pipeline(StandardScaler(with_mean=False), LassoLars(alpha))
     clf = model.fit(XMAT_Train, Y_Train)
-    return clf
+    scale = model[0].scale_
+    return clf, scale
 
 
 def write_coefficients(coeff, str_alpha, str_type):
@@ -304,8 +303,8 @@ def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
         for alpha in alphas:
             str_alpha = str("%.0e" % Decimal(alpha))
             # Fit
-            clf = fit_model(alpha, XMAT_Train, Y_Train)
-            coeff = np.copy(clf[-1].coef_)
+            clf, scale = fit_model(alpha, XMAT_Train, Y_Train)
+            coeff = np.copy(clf[-1].coef_ / scale)
             # Score/RMSE/MAS
             Y_OUT_Train = clf.predict(XMAT_Train)
             Y_OUT_Test = clf.predict(XMAT_Test)
@@ -315,7 +314,9 @@ def runLasso(inputArgs, alpha=None, ref_dir="Refs"):
             RMSE_Test = np.sqrt(mean_squared_error(Y_OUT_Test, Y_Test))
             MAS_Train = mean_absolute_error(Y_OUT_Train, Y_Train)
             MAS_Test = mean_absolute_error(Y_OUT_Test, Y_Test)
-            print(f"\n alpha:{alpha} Train error:{RMSE_Train} Test error:{RMSE_Test}\n ")
+            print(
+                f"\n alpha:{alpha} Train error:{RMSE_Train} Test error:{RMSE_Test}\n "
+            )
             write_coefficients(coeff, str_alpha, str_type)
             write_results(Y_Test, Y_OUT_Test, str_alpha, str_type, "ResultsTest")
             write_results(Y_Train, Y_OUT_Train, str_alpha, str_type, "ResultsTrain")
