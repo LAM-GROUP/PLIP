@@ -1,3 +1,9 @@
+## 0.3.5 (2024-01-25)
+
+### Fix
+
+- Correct standarization with mean set to false and rescaled coefficients.
+
 ## 0.3.4 (2023-07-12)
 
 ### Refactor
